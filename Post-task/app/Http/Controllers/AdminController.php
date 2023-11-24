@@ -18,6 +18,7 @@ class AdminController extends Controller
    
     
       //store admin create data
+      
         public function store(Request $request)
         {
             // Validate the incoming request data
@@ -54,7 +55,7 @@ public function getAdmin()
 {
  
     $admins=AdminModel::all();
-    // dd($admins->toArray());  // Check the retrieved data
+
 
     return view('superAdmin.addAdmin',['admins'=>$admins]);
 
@@ -62,26 +63,7 @@ public function getAdmin()
 }
 
 
-public function login(Request $request)
-{
-    $request->validate([
-        'user_name' => 'required|string',
-        'password' => 'required|string',
-    ]);
-
-    $credentials = $request->only('user_name', 'password');
-
-    if (Auth::guard('admin')->attempt($credentials)) {
-        // Authentication passed
-        return redirect()->intended('/admin');
-    }
-
-    // Authentication failed
-    return back()->withErrors(['user_name' => 'Invalid credentials'])->withInput();
-}
-
-//admin data Delete
-
+//Admin Delete
 public function destroy($id)
 {
 

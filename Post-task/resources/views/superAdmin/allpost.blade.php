@@ -45,7 +45,12 @@
 </head>
 <body>
     <div class="container">
-        <h2>Admin Posts</h2>
+        <div>
+        <h2>Admin All Posts</h2>
+        <a href="{{ route('superadmin') }}" class="btn btn-primary">Add Admin</a>
+ 
+    </div>
+        
 
         <table>
             <thead>
@@ -55,6 +60,8 @@
                     <th>Date</th>
                     <th>Description</th>
                     <th>Post Approve</th>
+                    <th>Post Cancel</th>
+                    
                 </tr>
             </thead>
             <tbody>
@@ -64,7 +71,17 @@
                         <td>{{ $post->username }}</td>
                         <td>{{ $post->date }}</td>
                         <td>{{ $post->description }}</td>
-                        <td>  <button onclick="approvePost('{{ $post->id }}')">Approve</button>
+                        
+                        <td>  <form id="approveForm_{{ $post->id }}" action="{{ route('approve-post', ['id' => $post->id]) }}" method="post">
+        @csrf
+        <button type="submit" onclick="return confirm('Are you sure you want to approve this post?')">Approve Post</button>
+    </form>
+                        </td>
+
+                        <td>  <form id="approveForm_{{ $post->id }}" action="{{ route('cancel-post', ['id' => $post->id]) }}" method="post">
+        @csrf
+        <button type="submit" onclick="return confirm('Are you sure you want to cancel this post?')">Cancel Post</button>
+    </form>
                         </td>
                         
                     </tr>
@@ -75,34 +92,4 @@
 </body>
 </html>
 
-<script>
-    function approvePost(postId) {
-        // Assuming you have a server-side route to handle post approval
-        fetch(`/approve-post/${postId}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Assuming data.success is true if the approval is successful
-            if (data.success) {
-                // Optional: Update the UI immediately
-                const approveButton = document.querySelector(`button[data-post-id="${postId}"]`);
-                approveButton.textContent = 'Approved';
-                approveButton.disabled = true;
 
-                // Optional: Redirect to the home page or update the post list
-                // window.location.href = '/'; // Redirect to the home page
-                // Update the post list dynamically
-            } else {
-                // Handle approval failure
-                alert('Post approval failed.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-</script>

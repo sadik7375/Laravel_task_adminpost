@@ -4,12 +4,13 @@ return [
 
    // config/auth.php
 
-'guards' => [
-    'admin' => [
+   'guards' => [
+    'web' => [
         'driver' => 'session',
-        'provider' => 'admins', // Check that this matches your provider configuration
+        'provider' => 'users',
     ],
 ],
+
 
 'providers' => [
     'admins' => [

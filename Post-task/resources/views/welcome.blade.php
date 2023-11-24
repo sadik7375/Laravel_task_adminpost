@@ -67,6 +67,7 @@
 <body>
 <div class="navbar">
         <h1>All Post</h1>
+        <a href="{{route('adminlogin')}}"><P>Admin Login</P></a>
     </div>
     <div class="container">
         @foreach($posts as $post)

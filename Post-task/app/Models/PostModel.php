@@ -8,15 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class PostModel extends Model
 {
 
-    protected $table="adminpost";
+    protected $table="adminposts";
     protected $primaryKey="id";
     protected $fillable=[
 
         'title',
+        'username',
         'date',
         'description',
-        'username',
-        'status'=>'0'
+        'status'
+      
+        
         
       ];
 
